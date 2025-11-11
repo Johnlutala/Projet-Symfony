@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+{% block title %}Ajouter-Ingedient
+{% endblock %}
+
+{% block body %}
+
+	<style>
+
+		.dim {
+			background: linear-gradient(135deg, #b4b7bbff, #d9e6f2);
+			border-radius: 30px;
+			padding: 5px;
+			box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+			width: 500px;
+			max-width: 400px;
+			margin: auto;
+
+		}
+		#sms {
+			margin-left: 20px;
+		}
+		h3 {
+			padding: 20px;
+			margin: auto;
+		}
+		#af{
+			/* margin-left: 450px; */
+			margin: auto;
+		
+		}
+	.flash-container{
+	position: fixed;
+	top: 20px;
+	left: 1200px;
+	z-index: 1050;
+	width: 300px;
+		}
+	</style>
+
+
+	<class="flash-container">
+	{# read and display just one flash message type #}
+{% for message in app.flashes('success') %}
+	<div class="alert-success">
+		{{ message }}
+	</div>
+{% endfor %}
+		<h3 id="af">Bienvenue sur notre Formulaire Ingédient
+		</h3>
+		<div class="dim">
+			<h4 id="sms">Veuillez remplir ce formulaire</h4>
+
+		{{ form_start(form) }}
+
+<div class="">
+		<div class="group mb-3">
+			{{ form_label(form.name) }}
+			{{ form_widget(form.name) }}
+			<div class="form-error">
+				{{ form_errors(form.name) }}
+			</div>
+		</div>
+
+
+		<div class="group mb-3">
+			{{ form_label(form.price) }}
+			{{ form_widget(form.price) }}
+			<div class="form-error">
+				{{ form_errors(form.price) }}
+			</div>
+		</div>
+
+		<div class="group mb-3">
+			{{ form_row(form.submit) }}
+		</div>
+<div>
+		{{ form_end(form) }}
+		</div>
+</div>
+{% endblock %}

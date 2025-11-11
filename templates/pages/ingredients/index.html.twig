@@ -1,0 +1,163 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Ingrédients{% endblock %}
+
+{% block body %}
+	{# 💅 Styles pour un tableau plus moderne et propre #}
+	<style>
+		.example-wrapper {
+			margin: 2em auto;
+			max-width: 900px;
+			font-family: "Segoe UI", Roboto, sans-serif;
+		}
+
+		h2 {
+			font-weight: bold;
+			color: #333;
+			text-align: center;
+			margin-bottom: 25px;
+		}
+
+		table {
+			background-color: #fff;
+			border-collapse: collapse;
+			width: 100%;
+			border-radius: 10px;
+			overflow: hidden;
+			box-shadow: 0 0 10px rgba(0,0,0,0.1);
+		}
+
+		th, td {
+			text-align: center;
+			padding: 12px 15px;
+			vertical-align: middle;
+		}
+
+		th {
+			background-color: #007bff;
+			color: #fff;
+			font-weight: bold;
+		}
+
+		tr:nth-child(even) {
+			background-color: #f8f9fa;
+		}
+
+		tr:hover {
+			background-color: #eaf2ff;
+			transition: 0.3s;
+		}
+
+		.flash-container {
+			position: fixed;
+			top: 20px;
+			right: 20px;
+			z-index: 1050;
+			width: 300px;
+		}
+
+		.icon-btn {
+			border: none;
+			background: none;
+			color: #007bff;
+			cursor: pointer;
+			font-size: 1.2rem;
+			margin: 0 5px;
+			transition: color 0.2s ease-in-out;
+		}
+
+		.icon-btn.delete {
+			color: #dc3545;
+		}
+
+		.icon-btn:hover {
+			transform: scale(1.15);
+			color: #0056b3;
+		}
+
+		.icon-btn.delete:hover {
+			color: #a71d2a;
+		}
+	</style>
+
+	{# Messages flash #}
+	<div class="flash-container">
+		{% for label, messages in app.flashes %}
+			{% for message in messages %}
+				<div class="alert alert-{{ label }} alert-dismissible fade show mb-2 flash-message" role="alert">
+					{{ message }}
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+				</div>
+			{% endfor %}
+		{% endfor %}
+	</div>
+
+	<div class="example-wrapper">
+		<h2>Liste des Ingrédients disponibles dans le stock</h2>
+
+		<div class="d-flex justify-content-between mb-3">
+			<h5>Total Ingrédients : {{ ingrediens.getTotalItemCount }}</h5>
+		</div>
+
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Nom</th>
+					<th>Prix</th>
+					<th>Date de création</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				{% for ingredient in ingrediens %}
+					<tr>
+						<td>{{ ingredient.id }}</td>
+						<td>{{ ingredient.name }}</td>
+						<td>{{ ingredient.price }} $ </td>
+						<td>{{ ingredient.createdAt|date('d/m/Y') }}</td>
+						<td>
+							<a href="{{ path('update', {id: ingredient.id }) }}" title="Modifier" class="icon-btn edit">
+								<i class="fas fa-edit 5rem "></i>
+							</a>
+
+							<a href="{{ path('delete', {id: ingredient.id }) }}"
+							   title="Supprimer"
+							   class="icon-btn delete"
+							   onclick="return confirm('⚠️ Voulez-vous vraiment supprimer cet ingrédient ?');">
+								<i class="fas fa-trash-alt 5erm"></i>
+							</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="5" class="text-center text-muted">Aucun ingrédient trouvé</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		{# Pagination #}
+		<div class="navigation mt-3 d-flex justify-content-center">
+			{{ knp_pagination_render(ingrediens) }}
+		</div>
+	</div>
+
+	<script>
+		// Masquer automatiquement les messages flash après 3 secondes
+		document.addEventListener('DOMContentLoaded', () => {
+			const alerts = document.querySelectorAll('.flash-message');
+			alerts.forEach((alert) => {
+				setTimeout(() => {
+					alert.classList.remove('show');
+					alert.classList.add('fade');
+					setTimeout(() => alert.remove(), 500);
+				}, 3000);
+			});
+		});
+	</script>
+
+	{# 🔗 Import des icônes Font Awesome #}
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recette - {{ recettes.name }}{% endblock %}
+
+{% block body %}
+
+<div class="container mt-5">
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">{{ recettes.name }}</h2>
+            <small>Créée le {{ recettes.creatDat|date('d/m/Y') }}</small>
+        </div>
+
+        <div class="card-body">
+            <p>
+                <strong>Temps :</strong>
+                {% if recettes.time %}
+                    {{ recettes.time }}
+                {% else %}
+                    <span class="text-muted fst-italic">Non renseigné</span>
+                {% endif %}
+            </p>
+
+            <p>
+                <strong>Nombre de personnes :</strong>
+                {% if recettes.nbrepersonne %}
+                    {{ recettes.nbrepersonne }} / 10
+                {% else %}
+                    <span class="text-muted fst-italic">Non renseigné</span>
+                {% endif %}
+            </p>
+
+            <p>
+                <strong>Prix ($) :</strong>
+                {% if recettes.price %}
+                    {{ recettes.price }}
+                {% else %}
+                    <span class="text-muted fst-italic">Non renseigné</span>
+                {% endif %}
+            </p>
+
+            <p>
+                <strong>Difficulté :</strong>
+                {% if recettes.difficulty %}
+                    {{ recettes.difficulty }}
+                {% else %}
+                    <span class="text-muted fst-italic">Non renseigné</span>
+                {% endif %}
+            </p>
+
+            <p>
+                <strong>Description :</strong>
+                {% if recettes.description %}
+                    {{ recettes.description }}
+                {% else %}
+                    <span class="text-muted fst-italic">Non renseigné</span>
+                {% endif %}
+            </p>
+
+            {# Affichage des ingrédients sous forme de badges #}
+            <div class="mt-3">
+                <strong>Ingrédients :</strong>
+                {% if recettes.ingredients|length > 0 %}
+                    <div class="d-flex flex-wrap gap-2 mt-2">
+                        {% for ingredient in recettes.ingredients %}
+                            <span class="badge bg-primary">{{ ingredient.name }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <span class="text-muted fst-italic">Aucun ingrédient renseigné</span>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil — Recettes de la communauté{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper {
+        margin: 1em auto;
+        max-width: 1000px;
+        width: 95%;
+        font: 18px/1.5 "Segoe UI", sans-serif;
+    }
+
+    .intro-text {
+        background: linear-gradient(135deg, #ff914d, #ffce3a); /* joli dégradé orange/doré */
+        color: white; /* texte bien visible */
+        padding: 25px 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        margin-bottom: 40px;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .intro-text:hover {
+        transform: scale(1.02);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+    }
+
+    .intro-text h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .intro-text p {
+        font-size: 1.1rem;
+        margin: 0;
+    }
+</style>
+
+<div class="example-wrapper">
+    <div class="container">
+        <div class="intro-text">
+            <h1>Bienvenue sur <strong>Recettes de la Communauté</strong> 🍽️</h1>
+            <p>
+                Explorez les créations culinaires partagées par nos membres passionnés !  
+                Découvrez de nouvelles saveurs, inspirez-vous et partagez à votre tour vos propres recettes.
+            </p>
+        </div>
+
+        <h2 class="mt-4 mb-4 text-center text-primary">Les recettes de la communauté</h2>
+
+        <div class="row">
+            {% for recette in recettes %}
+                <div class="col-md-4 mb-4">
+                    <div class="card bg-light h-100 shadow-sm">
+                        <div class="card-header text-center bg-primary text-white">
+                            Recette N° {{ recette.id }}
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title text-primary">Titre : {{ recette.name }}</h4>
+                            <p class="card-text">{{ recette.description }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <p class="text-center text-muted">Aucune recette disponible pour le moment. Revenez bientôt !</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier-Une-Recette{% endblock %}
+
+{% block body %}
+<style>
+    /* ✅ Styles spécifiques au bouton en bas */
+    .fixed-submit {
+        position: fixed;
+        bottom: 25px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1050;
+        width: auto;
+        text-align: center;
+    }
+
+    .fixed-submit button {
+        font-size: 1.1rem;
+        padding: 12px 40px;
+        border-radius: 50px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+    }
+
+    .fixed-submit button:hover {
+        transform: translateY(-2px);
+        transition: all 0.3s ease;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-6">
+            
+            {# Carte du formulaire #}
+            <div class="card shadow-lg border-0 rounded-4 mb-5">
+                <div class="card-header text-center bg-primary text-white rounded-top-4">
+                    <h4 class="my-2">🍽️ Modifier un ingrédient</h4>
+                </div>
+                <div class="card-body p-4">
+
+                    {# Messages de succès #}
+                    {% for message in app.flashes('success') %}
+                        <div class="alert alert-success text-center">
+                            <i class="fas fa-check-circle"></i> {{ message }}
+                        </div>
+                    {% endfor %}
+
+                    {{ form_start(form) }}
+
+                    <div class="mb-3">
+                        {{ form_label(form.name, 'Nom de l’ingrédient', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+                        {{ form_widget(form.name, {'attr': {'class': 'form-control form-control-lg'}}) }}
+                        {{ form_errors(form.name) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.price, 'Prix (€)', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+                        {{ form_widget(form.price, {'attr': {'class': 'form-control form-control-lg'}}) }}
+                        {{ form_errors(form.price) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.difficulty, 'Difficulté', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+                        {{ form_widget(form.difficulty, {'attr': {'class': 'form-control form-control-lg'}}) }}
+                        {{ form_errors(form.difficulty) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+                        {{ form_widget(form.description, {'attr': {'class': 'form-control form-control-lg', 'rows': '4'}}) }}
+                        {{ form_errors(form.description) }}
+                    </div>
+
+                    {{ form_end(form) }}
+                </div>
+
+                <div class="card-footer text-center bg-light rounded-bottom-4">
+                    <a href="{{ path('Afficher_Ingedients') }}" class="btn btn-outline-secondary btn-sm">
+                        <i class="fas fa-arrow-left me-1"></i> Retour à la liste
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{# ✅ Bouton "Modifier" fixé en bas de la page #}
+{# <div class="fixed-submit"> #}
+    {# <button type="submit" #}
+            {# form="{{ form.vars.id }}" #}
+            {# class="btn btn-primary btn-lg px-5" #}
+            {# onclick="return confirm('⚠️ Voulez-vous vraiment modifier cet ingrédient ?')"> #}
+        {# <i class="fas fa-check-circle me-2"></i> Modifier #}
+    {# </button> #}
+{# </div> #}
+{#  #}
+{% endblock %}

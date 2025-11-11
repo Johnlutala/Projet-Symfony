@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recette-Public{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="row">
+        {% for recette in recettes %}
+            <div class="col-md-4 mb-4">
+                <div class="card bg-light h-100">
+                    <div class="card-header">
+                        Recette N° {{ recette.id }}
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">Titre : {{ recette.name }}</h4>
+                        <p class="card-text">{{ recette.description }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
